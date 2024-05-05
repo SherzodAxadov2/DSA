@@ -77,6 +77,79 @@ class LinkedList {
         return temp
     }
 
+    get(index) {
+        if (index < 0 || index >= this.length) return undefined
+        let temp = this.head
+        for (let i = 0; i < index; i++) {
+            temp = temp.next
+        }
+
+        return temp
+    }
+
+    set(index, value) {
+        let temp = this.get(index)
+        if (temp) {
+            temp.value = value
+            return temp
+        }
+        return undefined
+    }
+
+    insert(index, value) {
+        if (index === 0) return this.unshift(value)
+        if (index === this.length) return this.push(value)
+        if (index < 0 || index >= this.length) return false
+
+        let newNode = new Node(value)
+        let temp = this.get(index - 1)
+        newNode.next = temp
+        temp.next = newNode
+
+        this.length++
+
+        return true
+    }
+
+    remove(index) {
+        if (index === 0) return this.shift()
+        if (index === this.length - 1) return this.pop()
+        if (index < 0 || index >= this.length) return false
+
+        /* use this one */
+        // let before = this.get(index - 1)
+        // let temp = this.get(index)
+        // before.next = temp.next
+        // temp.next = null
+
+        /* or this one */
+        let temp = this.get(index - 1)
+        temp.next = temp.next.next
+
+        this.length--
+
+        return true
+    }
+
+    reverse() {
+        let prev = null
+        let current = this.head
+        let next
+
+        while (current){
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        }
+
+        this.tail = this.head
+        this.head = prev
+
+        return this
+    }
+
+
     printList() {
         let temp = this.head;
         while (temp !== null) {
@@ -108,11 +181,17 @@ class LinkedList {
 
 function test() {
     let myLinkedList = new LinkedList(7);
+    myLinkedList.unshift(8)
+    myLinkedList.push(6)
+    // myLinkedList.push(5)
     // myLinkedList.pop()
-    // myLinkedList.unshift(8)
-    myLinkedList.shift()
+    // myLinkedList.shift()
+    // console.log('set: ', myLinkedList.set(1, 7.5))
+    // console.log('insertion: ', myLinkedList.insert(1, 10))
+    // console.log('remove: ', myLinkedList.remove(1))
 
-    console.log(myLinkedList)
+    console.log('reverse: ', myLinkedList.reverse())
+    // console.log(myLinkedList)
 
     // myLinkedList.getHead();
     // myLinkedList.getTail();
