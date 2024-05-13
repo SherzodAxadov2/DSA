@@ -34,3 +34,16 @@ const deleteMiddleNode = function (head) {    //head ListNode
 
     return head
 };
+
+const mergeTwoLists = function (list1, list2) {
+    console.log(list1, list2)
+    // let temp = list1
+    // console.log(list1)
+
+    // console.log(temp)
+
+    // while(temp && temp.next){
+    //     temp = list1.next
+    // }
+
+};

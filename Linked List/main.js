@@ -5,7 +5,7 @@ class Node {
     }
 }
 
-class LinkedList {
+export class LinkedList {
     constructor(value) {
         const newNode = new Node(value)
         this.head = newNode
