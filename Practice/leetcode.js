@@ -66,4 +66,13 @@ const longestConsecutive = function (nums) {
     return max
 };
 
-console.log(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))
+// console.log(longestConsecutive([0, 3, 7, 2, 5, 8, 4, 6, 0, 1]))
+
+const sortPeople = function (names, heights) {
+    return heights.map((height, i) => {
+        return {height, name: names[i]}
+    }).sort((a, b) => b.height - a.height)
+        .map(obj => obj.name)
+};
+
+console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170]))
