@@ -75,4 +75,26 @@ const sortPeople = function (names, heights) {
         .map(obj => obj.name)
 };
 
-console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170]))
+// console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170]))
+
+
+// Recursion
+const factorial = function (n) {
+    if (n === 1) return n
+    return n * factorial(n - 1)
+}
+
+const sum = function (n) {
+    if (n < 1) return n
+    return n + sum(n - 1)
+}
+
+// console.log(factorial(4))
+// console.log(sum(4))
+
+function checkPower(n) {
+    if (n < 2) return n
+    return checkPower(n / 2)
+}
+
+console.log(checkPower(17))
