@@ -123,4 +123,26 @@ const myPow = function (x, n) {
     return power(x, n);
 };
 
-console.log(myPow(2, -4), Math.pow(2, -4))
+// console.log(myPow(2, -4), Math.pow(2, -4))
+
+function isSelfDividingNumber(num) {
+    // first solution
+    // let arr = String(num).split('')
+    // for (let i = 0; i < arr.length; i++) {
+    //     if (num % +arr[i] !== 0) return false
+    // }
+    // return true
+
+    // second solution
+    let numClone = num
+    while (numClone >= 1) {
+        let last = numClone % 10
+        if (num % last === 0) {
+            numClone = Math.floor(numClone / 10)
+        } else return false
+    }
+
+    return true
+}
+
+console.log(isSelfDividingNumber(21))
