@@ -16,3 +16,6 @@ function bubbleSort(array) {
 }
 
 console.log(bubbleSort([4, 2, 6, 5, 1, 3]))
+
+// Average-case time complexity and Worst time complexity is O(n^2) => n*(n-1)/2
+// Best time complexity is O(n) => if array already is sorted
