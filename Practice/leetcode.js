@@ -145,4 +145,87 @@ function isSelfDividingNumber(num) {
     return true
 }
 
-console.log(isSelfDividingNumber(21))
+// console.log(isSelfDividingNumber(21))
+
+// Kth Largest Element in an Array
+const findKthLargest = function (nums, k) {
+    let maxIndex = 0
+
+    while (k) {
+        for (let index in nums) {
+            if (nums[index] > nums[maxIndex]) maxIndex = index
+        }
+        if (k === 1) return nums[maxIndex]
+        nums[maxIndex] = -Infinity
+        k--
+    }
+
+    return nums
+};
+
+// console.log(findKthLargest([3, 2, 1, 5, 6, 4], 2))
+
+
+function minimumTimeDifference(timePoints) {
+    function calculateTime(string) {
+        if (string === '00:00') return 24 * 60
+        return string.split(':')[0] !== '00' ? string.split(':')[0] * 60 + +string.split(':')[1] : 0 + (string.split(':')[1] !== '00' ? +string.split(':')[1] : 0)
+    }
+
+    timePoints.sort((a, b) => {
+        let totalA = calculateTime(a)
+        let totalB = calculateTime(b)
+
+        return totalB - totalA
+    })
+
+    let min = calculateTime(timePoints[0]) - calculateTime(timePoints[1])
+    for (let i = 2; i < timePoints.length; i++) {
+        if (calculateTime(timePoints[i - 1]) - calculateTime(timePoints[i])) min = calculateTime(timePoints[i - 1]) - calculateTime(timePoints[i])
+    }
+
+    return min
+}
+
+// console.log(minimumTimeDifference(["05:31", "22:08", "00:35"]))
+
+const maximumProduct = function (nums) {
+    nums.sort((a, b) => b - a)
+
+    let n = nums.length - 1
+    let value1 = nums[0] * nums[1] * nums[2]
+    let value2 = nums[0] * nums[n] * nums[n - 1]
+    return value1 > value2 ? value1 : value2
+};
+
+// console.log(maximumProduct([1, 2, 3, 4, -6],))
+
+const isHappy = function (n) {
+    let number = n
+    let sum = 0
+    let arr = []
+
+    while (number * number > 10) {
+        if (sum && number === n) return false
+        sum = 0
+        arr = String(number).split('')
+        for (let item of arr) sum += item * item
+        number = sum
+    }
+
+    return number === 1
+};
+
+// console.log(isHappy(4))
+
+const majorityElement = function (nums) {
+    let obj = {}
+    for (let i in nums) {
+        obj[nums[i]] = obj[nums[i]] ? obj[nums[i]] + 1 : 1
+    }
+
+    let sortedArr = Object.entries(obj).filter(el => el[1] > nums.length / 3).map(item => item[0])
+    return sortedArr.length ? sortedArr : nums
+};
+
+console.log(majorityElement([1, 2, 3]))
