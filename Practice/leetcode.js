@@ -228,4 +228,102 @@ const majorityElement = function (nums) {
     return sortedArr.length ? sortedArr : nums
 };
 
-console.log(majorityElement([1, 2, 3]))
+// console.log(majorityElement([1, 2, 3]))
+
+const longestPalindrome = function (s) {
+    let map = new Map()
+
+    for (let c of s) {
+        map.set(c, map.has(c) ? map.get(c) + 1 : 1)
+    }
+
+    let result = 0
+    let maxOdd = 0
+
+    for (let [key, value] of map.entries()) {
+        if (value % 2 === 0) result += value
+        else {
+            result += value - 1  // maybe 13 -> a and 25 -> b
+            maxOdd = 1
+        }
+    }
+
+
+    return result + maxOdd
+};
+// console.log(map,result, maxOdd)
+
+// console.log(longestPalindrome("civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth"))
+
+// Random Pick Index with constructor function
+const Solution = function (nums) {
+    this.nums = nums
+    this.map = createMap()
+
+    function createMap() {
+        let map = new Map()
+
+        for (let key in nums) {
+            let item = nums[key]
+            if (!map.has(item)) {
+                map.set(item, [])
+            }
+            map.get(item).push(key)
+        }
+
+        return map
+    }
+};
+
+Solution.prototype.pick = function (target) {
+    if (this.map.has(target)) {
+        let targetArray = this.map.get(target)
+        if (targetArray.length === 1) return parseInt(targetArray[0])
+
+        let randomIndex = Math.floor(Math.random() * targetArray.length);
+        return targetArray[randomIndex]
+    }
+};
+let obj = new Solution([1, 2, 3, 3, 3])
+console.log(obj.pick(3))
+
+function getRandomNumber(n) {
+    return Math.floor(Math.random() * n)
+}
+
+// console.log(getRandomNumber(3))
+
+// Random Pick Index with class
+
+// class Solution {
+//     constructor(nums) {
+//         this.nums = nums
+//         this.map = this.createMap()
+//     }
+//
+//     createMap() {
+//         let map = new Map()
+//
+//         for (let key in this.nums) {
+//             let item = this.nums[key]
+//             if (!map.has(item)) {
+//                 map.set(item, [])
+//             }
+//             map.get(item).push(key)
+//         }
+//
+//         return map
+//     }
+//
+//     pick(target) {
+//         if (this.map.has(target)) {
+//             let targetArray = this.map.get(target)
+//             if (targetArray.length === 1) return targetArray[0]
+//             let index = Math.floor(Math.random() * targetArray.length)
+//             return targetArray[index]
+//         }
+//     }
+// }
+//
+// let obj2 = new Solution([1, 2, 3, 3, 3])
+// console.log(obj2.pick(3))
