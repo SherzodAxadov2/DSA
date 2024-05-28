@@ -415,3 +415,63 @@ const countPrimes = function (n) {
 }
 
 // console.log(countPrimes(10))
+
+// Squares of a Sorted Array
+const sortedSquares = function (nums) {
+    // nums.sort((a, b) => Math.abs(a) - Math.abs(b))
+    // return nums.map(el => el ** 2)
+
+    let left = 0
+    let right = nums.length - 1
+    let position = nums.length - 1
+    let result = Array(nums.length)
+
+    while (left <= right) {
+        if (Math.abs(nums[left]) < Math.abs(nums[right])) {
+            result[position] = nums[right--] ** 2
+        } else {
+            result[position] = nums[left++] ** 2
+        }
+        position -= 1
+    }
+
+    return result
+};
+
+// console.log(sortedSquares([-11, -4, -1, 0, 3, 10]))
+
+// Backspace String Compare
+const backspaceCompare = function (s, t) {
+    // first solution
+    // let sStack = []
+    // let tStack = []
+    // for (let c of s) {
+    //     if (c !== '#') sStack.push(c)
+    //     else sStack.pop()
+    // }
+    // for (let c of t) {
+    //     if (c !== '#') tStack.push(c)
+    //     else tStack.pop()
+    // }
+    // if (sStack.length === tStack.length) {
+    //     for (let c in sStack) {
+    //         if (sStack[c] !== tStack[c]) return false
+    //     }
+    // } else return false
+    //
+    // return true
+
+    // optimized solution
+    function finalString(string) {
+        let stack = []
+        for (let c of string) {
+            if (c === '#') stack.pop()
+            else stack.push(c)
+        }
+        return stack
+    }
+
+    return finalString(s).join('') === finalString(t).join('')
+};
+
+console.log(backspaceCompare('a#c', 'b'))
