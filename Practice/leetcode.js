@@ -285,7 +285,8 @@ Solution.prototype.pick = function (target) {
     }
 };
 let obj = new Solution([1, 2, 3, 3, 3])
-console.log(obj.pick(3))
+
+// console.log(obj.pick(3))
 
 function getRandomNumber(n) {
     return Math.floor(Math.random() * n)
@@ -327,3 +328,90 @@ function getRandomNumber(n) {
 //
 // let obj2 = new Solution([1, 2, 3, 3, 3])
 // console.log(obj2.pick(3))
+
+// Find Common Characters
+
+const commonChars = function (words) {
+    function counter(word) {
+        let map = {}
+        for (let c of word) {
+            map[c] = (map[c] || 0) + 1
+        }
+        return map
+    }
+
+    let commonChars = counter(words[0])
+
+    for (let i = 0; i < words.length; i++) {
+        let obj = counter(words[i])
+        for (let key in commonChars) {
+            if (obj[key]) {
+                commonChars[key] = Math.min(commonChars[key], obj[key])
+            } else delete commonChars[key]
+        }
+    }
+
+    let result = []
+    for (let key in commonChars) {
+        result.push(...Array(commonChars[key]).fill(key))
+    }
+
+    return result
+};
+
+// console.log(commonChars(["bella", "label", "roller"]))
+
+const commonFactors = function (a, b) {
+    let factors = new Set()
+
+    for (let i = 1; i <= Math.sqrt(a); i++) {
+        if (a % i === 0) {
+            factors.add(i)
+            factors.add(a / i)
+        }
+    }
+
+    let result = 0
+    for (let i = 1; i <= Math.sqrt(b); i++) {
+        if (b % i === 0) {
+            if (factors.has(i)) result++
+            if (factors.has(b / i) && b / i !== i) result++
+        }
+    }
+
+    return result
+};
+
+// console.log(commonFactors(12, 6))
+
+function isPrime(number) {
+    if (number <= 1) return false
+    if (number <= 3) return true
+
+    if (number % 2 === 0) return false
+
+    for (let i = 3; i <= Math.sqrt(number); i += 2) {  // for odd numbers
+        if (number % i === 0) return false
+    }
+
+    return true
+}
+
+// console.log(isPrime(21))
+
+const countPrimes = function (n) {
+    let array = new Array(n).fill(true)
+    let count = 0
+
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (array[i]) {
+            for (let j = i * i; j < n; j += i) array[j] = false  // set false value if it divided by i
+        }
+    }
+
+    for (let i = 2; i < n; i++) if (array[i]) count++
+
+    return count
+}
+
+// console.log(countPrimes(10))
