@@ -474,4 +474,30 @@ const backspaceCompare = function (s, t) {
     return finalString(s).join('') === finalString(t).join('')
 };
 
-console.log(backspaceCompare('a#c', 'b'))
+// console.log(backspaceCompare('a#c', 'b'))
+
+// const majorityElement = function (nums) {
+//     let map = new Map()
+//
+//     for (let el of nums) {
+//         map.set(el, map.has(el) ? map.get(el) + 1 : 1)
+//     }
+//
+//     for (let [key, value] in map.entries()) {
+//         console.log(key, value)
+//         if (value > nums.length / 2) return key
+//     }
+// };
+
+const maximum69Number = function (num) {
+    let numStr = num.toString()
+    for (let i in numStr) {
+        if (numStr[i] === '6') {
+            return parseInt(numStr.slice(0, +i) + '9' + numStr.slice(+i + 1))
+        }
+    }
+
+    return num
+};
+
+console.log(maximum69Number(9669))
