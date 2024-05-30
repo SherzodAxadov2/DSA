@@ -88,6 +88,46 @@ class BST {
 
         return results
     }
+
+    DFSPreOrder() {
+        let results = []
+
+        function traverse(currentNode) {
+            results.push(currentNode.value)
+            if (currentNode.left) traverse(currentNode.left)
+            if (currentNode.right) traverse(currentNode.right)
+        }
+
+        traverse(this.root)
+
+        return results
+    }
+
+    DFSPostOrder() {
+        let results = []
+
+        function traverse(node) {
+            if (node.left) traverse(node.left)
+            if (node.right) traverse(node.right)
+            results.push(node.value)
+        }
+
+        traverse(this.root)
+        return results
+    }
+
+    DFSInOrder() {
+        let results = []
+
+        function traverse(node) {
+            if (node.left) traverse(node.left)
+            results.push(node.value)
+            if (node.right) traverse(node.right)
+        }
+
+        traverse(this.root)
+        return results
+    }
 }
 
 let myTree = new BST()
@@ -96,6 +136,7 @@ myTree.insert(47)
 myTree.insert(21)
 myTree.insert(76)
 myTree.insert(18)
+myTree.insert(27)
 
 myTree.insert(52)
 myTree.insert(82)
@@ -103,4 +144,7 @@ myTree.insert(82)
 // console.log(myTree.contains(18))
 // console.log(myTree.minValue())
 // console.log(myTree.minValueNode(myTree.root.right))
-console.log(myTree.BFS())
+// console.log(myTree.BFS())
+// console.log(myTree.DFSPreOrder())
+// console.log(myTree.DFSPostOrder())
+console.log(myTree.DFSInOrder())
