@@ -500,4 +500,117 @@ const maximum69Number = function (num) {
     return num
 };
 
-console.log(maximum69Number(9669))
+// console.log(maximum69Number(9669))
+
+const evaluateTree = function (root) {
+    let lastValue
+
+    function traverse(node) {
+        if (node.left) traverse(node.left)
+        if (node.right) traverse(node.right)
+
+        if (lastValue === undefined) lastValue = node.value
+        // else {
+        //
+        // }
+    }
+
+    traverse(root)
+};
+
+function TreeNode(val, left, right) {
+    this.val = (val === undefined ? 0 : val)
+    this.left = (left === undefined ? null : left)
+    this.right = (right === undefined ? null : right)
+}
+
+const sortedArrayToBST = function (nums) {
+    if (!nums || !nums.length) return null
+
+    function makeBST(nums, low, high) {
+        if (low > high) return null
+
+        let middle = Math.floor((low + high) / 2)
+        let root = new TreeNode(nums[middle])
+        root.left = makeBST(nums, low, middle - 1)
+        root.right = makeBST(nums, middle + 1, high)
+
+        return root
+    }
+
+    return makeBST(nums, 0, nums.length - 1)
+};
+
+// console.log(sortedArrayToBST([0, 1, 3, 4, 5]))
+
+const hammingWeight = function (n) {
+    // Brian Kernighan’s Algorithm  // Hamming weight
+    let counter = 0
+    while (n) {
+        n = n & (n - 1)
+        counter++
+    }
+
+    return counter
+};
+
+// console.log(hammingWeight(2147483645))
+
+const sortByBits = function (arr) {
+    function calcCount(number) {
+        let count = 0
+        while (number) {
+            number = number & (number - 1)
+            count++
+        }
+        return count
+    }
+
+    return arr.sort((a, b) => calcCount(a) - calcCount(b) || a - b)
+};
+
+// console.log(sortByBits([0, 1, 2, 3, 4, 5, 6, 7, 8]))
+
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+const sortList = function (head) {
+    let temp = head
+    let slow = head
+    let fast = head
+
+    while (fast && fast.next) {
+        temp = slow
+        slow = slow.next
+        fast = fast.next.next
+    }
+    temp.next = null
+
+    let leftSide = sortList(head)
+    let rightSide = sortList(slow)
+
+    return mergeSortedList(leftSide, rightSide)
+};
+
+function mergeSortedList(l1, l2) {
+    let dummy = new ListNode()
+    let temp = dummy
+
+    while (l1 && l2) {
+        if (l1.val < l2.val) {
+            temp.next = l1
+            l1 = l1.next
+        } else {
+            temp.next = l2
+            l2 = l2.next
+        }
+        temp = temp.next
+    }
+
+    if (l1) temp.next = l1
+    if (l2) temp.next = l2
+
+    return dummy.next
+}
