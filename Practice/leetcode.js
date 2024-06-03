@@ -723,4 +723,59 @@ const shipWithinDays = function (weights, days) {
     return result
 };
 
-console.log(shipWithinDays([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5))
+// console.log(shipWithinDays([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5))
+
+const isPerfectSquare = function (num) {
+    // return Math.sqrt(num) * 10 % 10 === 0
+
+    // With binary search
+    let start = 1
+    let end = num
+
+    while (start <= end) {
+        let middle = Math.floor((start + end) / 2)
+
+        if (middle * middle === num) return true
+        else if (middle * middle > num) {
+            end = middle - 1
+        } else {
+            start = middle + 1
+        }
+    }
+
+    return false
+};
+
+// console.log(isPerfectSquare(24))
+
+const checkPerfectNumber = function (num) {
+    let sum = 0
+    for (let i = 1; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) {
+            sum += i + num / i
+        }
+    }
+
+    return sum === 2 * num
+};
+
+// console.log(checkPerfectNumber(6))
+
+const findMin = function (nums) {
+    let left = 0
+    let right = nums.length - 1
+
+    while (left < right) {
+        let middle = Math.floor((left + right) / 2)
+
+        if (nums[middle] > nums[right]) {
+            left = middle + 1
+        } else {
+            right = middle
+        }
+    }
+
+    return nums[left]
+};
+
+console.log(findMin([4, 5, 6, 7, 0, 1, 2]))
