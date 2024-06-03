@@ -614,3 +614,113 @@ function mergeSortedList(l1, l2) {
 
     return dummy.next
 }
+
+function fibonacci(n) {
+    if (n <= 1) return n   // base case
+    return fibonacci(n - 2) + fibonacci(n - 1)
+}
+
+// console.log(fibonacci(7))
+
+const scoreOfString = function (s) {
+    let sum = 0
+    for (let i = 1; i <= s.length - 1; i++) {
+        console.log(s[i - 1], s[i])
+        sum += Math.abs(s[i].charCodeAt() - s[i - 1].charCodeAt())
+    }
+    return sum
+};
+
+// console.log(scoreOfString('hello'))
+
+function fibonacciTable(n) {
+    if (n <= 1) return n;
+    let table = {}
+    table[0] = 0
+    table[1] = 1
+
+    for (let i = 2; i <= n; i++) {
+        table[i] = table[i - 1] + table[i - 2]
+    }
+
+    return table[n]
+}
+
+// TC -> O(n), SC -> O(1)
+function fibonacciWithConstantSpace(n) {
+    if (n <= 1) return n;
+    let a = 0, b = 1
+    for (let i = 2; i <= n; i++) {
+        [a, b] = [b, a + b]
+    }
+
+    return b
+}
+
+// console.log(fibonacciTable(6))
+// console.log(fibonacciWithConstantSpace(7))
+
+const countPairs = function (nums, target) {
+    // let count = 0
+    // for (let i = 0; i < nums.length - 1; i++) {
+    //     for (let j = i + 1; j < nums.length; j++) {
+    //         if (nums[i] + nums[j] < target) count++
+    //     }
+    // }
+    //
+    // return count
+
+    // With two pointers
+    nums.sort((a, b) => a - b)
+    let count = 0
+    let left = 0
+    let right = nums.length - 1
+
+    while (left < right) {
+        if (nums[left] + nums[right] < target) {
+            count += right - left
+            left++
+        } else right--
+    }
+
+    return count
+};
+
+// console.log(countPairs([-6, 2, 5, -2, -7, -1, 3], -2))
+
+const shipWithinDays = function (weights, days) {
+    let left = 0;
+    let right = 0
+    for (let weight of weights) {
+        if (weight > left) left = weight
+        right += weight
+    }
+    let result = right
+
+    while (left <= right) {
+        let cap = Math.floor((left + right) / 2)
+
+        if (countDays(cap) <= days) {
+            result = Math.min(result, cap)
+            right = cap - 1
+        } else left = cap + 1
+    }
+
+    function countDays(target) {
+        let sum = 0;
+        let daysNeeded = 1;
+        for (let num of weights) {
+            sum += num;
+            if (sum > target) {
+                daysNeeded++;
+                sum = num;
+            }
+        }
+        return daysNeeded;
+    }
+
+
+    return result
+};
+
+console.log(shipWithinDays([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5))
