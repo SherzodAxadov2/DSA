@@ -778,4 +778,80 @@ const findMin = function (nums) {
     return nums[left]
 };
 
-console.log(findMin([4, 5, 6, 7, 0, 1, 2]))
+// console.log(findMin([4, 5, 6, 7, 0, 1, 2]))
+
+const missingInteger = function (nums) {
+    let set = new Set(nums)
+    let sum = nums[0];
+
+    for (let i = 1; i < nums.length; i++) {
+        if (nums[i] === nums[i - 1] + 1) {
+            sum += nums[i]
+        } else break
+    }
+
+    while (set.has(sum)) {
+        sum++
+    }
+
+    return sum
+};
+// console.log(missingInteger([3, 4, 5, 1, 12, 14, 13]))
+
+const subdomainVisits = function (cpdomains) {
+    let domain = {}
+
+    for (let d of cpdomains) {
+        let count = d.split(' ')[0]
+        let str = d.split(' ')[1].split('.')
+        for (let i = 0; i < str.length; i++) {
+            let item = str.slice(i).join('.')
+            domain[item] = (domain[item] || 0) + +count
+        }
+    }
+
+    return Object.entries(domain).map(el => {
+        return `${el[1]} ${el[0]}`
+    })
+};
+
+// console.log(subdomainVisits(["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]))
+
+const mostCommonWord = function (paragraph, banned) {
+    let setBanned = new Set(banned.map(el => el.toLowerCase()))
+    let str = {}
+
+    for (let item of paragraph.split(/\W+/).filter(Boolean)) {
+        if (!setBanned.has(item.toLowerCase())) {
+            str[item.toLowerCase()] = (str[item.toLowerCase()] || 0) + 1
+        }
+    }
+
+    return Object.entries(str).sort((a, b) => b[1] - a[1])[0][0]
+};
+
+// console.log(mostCommonWord('Bob hit a ball, the hit BALL flew far after it was hit.', ["hit"]))
+
+const duplicateZeros = function (arr) {
+    // for (let i = 0; i < arr.length-1; i++) {
+    //     if (!arr[i]) {
+    //         let prev = arr[i + 1]
+    //         for (let j = i + 2; j < arr.length; j++) {
+    //             [arr[j], prev] = [prev, arr[j]]
+    //         }
+    //         arr[++i] = 0
+    //     }
+    // }
+
+    for (let i = 0; i < arr.length-1; i++) {
+        if (!arr[i]) {
+            arr.splice(i, 0, 0);
+            arr.pop();
+            i++
+        }
+    }
+
+    return arr
+};
+
+console.log(duplicateZeros([1, 0, 2, 3, 0, 4, 5, 0]))
