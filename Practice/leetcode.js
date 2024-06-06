@@ -843,7 +843,7 @@ const duplicateZeros = function (arr) {
     //     }
     // }
 
-    for (let i = 0; i < arr.length-1; i++) {
+    for (let i = 0; i < arr.length - 1; i++) {
         if (!arr[i]) {
             arr.splice(i, 0, 0);
             arr.pop();
@@ -854,4 +854,48 @@ const duplicateZeros = function (arr) {
     return arr
 };
 
-console.log(duplicateZeros([1, 0, 2, 3, 0, 4, 5, 0]))
+// console.log(duplicateZeros([1, 0, 2, 3, 0, 4, 5, 0]))
+
+const removeDuplicates = function (nums) {
+    let left = 0
+    let right = 0
+
+    while (right < nums.length) {
+        let counter = 1
+        while (right + 1 < nums.length && nums[right] === nums[right + 1]) {
+            counter++
+            right++
+        }
+
+        for (let i = 0; i < Math.min(2, counter); i++) {
+            nums[left] = nums[right]
+            left++
+        }
+        right++
+    }
+
+    return left
+};
+
+// console.log(removeDuplicates([0, 0, 1, 1, 1, 1, 2, 3, 3]))
+
+const checkIfExist = function(arr) {
+    let hashTable = {}
+    for(let num of arr){
+        if(hashTable[num]!==undefined) return true
+        hashTable[num / 2] = num
+        hashTable[num * 2] = num
+    }
+
+    return false
+};
+
+// console.log(checkIfExist([-2,0,10,-19,4,6,-8]))
+
+const validMountainArray = function(arr) {
+    let flag = true
+    for(let i = 0; i< arr.length-1; i++){
+    }
+};
+
+// console.log(validMountainArray([0,3,2,1]))
