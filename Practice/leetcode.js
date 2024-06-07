@@ -893,9 +893,197 @@ const checkIfExist = function(arr) {
 // console.log(checkIfExist([-2,0,10,-19,4,6,-8]))
 
 const validMountainArray = function(arr) {
-    let flag = true
-    for(let i = 0; i< arr.length-1; i++){
-    }
+    if(arr.length < 3) return false;
+    // for(var i = 0; i< arr.length-1; i++){
+    //     if(arr[i]>=arr[i+1]) break  // get pick index
+    // }
+    //
+    // console.log(i)
+    // if(i+1 === arr.length || !i) return false
+    //
+    // for(let j = i; j < arr.length-1; j++) {
+    //     if(arr[j]<=arr[j+1]) return false
+    // }
+    //
+    // return true
+
+    let i = 0
+
+    while(i<arr.length-1 && arr[i]<arr[i+1]) i++
+
+    if(i+1 === arr.length || i === 0) return false
+
+    while(i<arr.length-1 && arr[i]>arr[i+1]) i++
+
+    return i = arr.length - 1
 };
 
-// console.log(validMountainArray([0,3,2,1]))
+// console.log(validMountainArray([9,8,7,6,5,4,3,2,1,0]))
+
+const replaceElements = function(arr) {
+    let maxRight = -1
+    for(let i = arr.length - 1; i >= 0; i--) {
+        let temp = arr[i]
+        arr[i] = maxRight  // lest element of array always -1
+
+        if(temp > maxRight) maxRight = temp
+    }
+
+
+    return arr
+};
+
+// console.log(replaceElements([17,18,5,4,6,1]))
+
+const arrayChange = function(nums, operations) {
+    // let map = {}
+    // for(let i in nums) {
+    //     map[nums[i]] = i
+    // }
+    //
+    //
+    // for(let o of operations) {
+    //     if(map[o[0]]){
+    //         nums[map[+o[0]]] = +o[1]
+    //         map[o[1]] = map[o[0]]
+    //         delete map[o[0]]
+    //     }
+    // }
+    //
+    // return Object.entries(map).sort((a, b) => a[1] - b[1]).map(el=> +el[0])
+
+//     best approach
+
+    let map = new Map();
+    nums.forEach((num, index) => map.set(num, index));
+
+    operations.forEach(([oldVal, newVal])=>{
+        let index = map.get(oldVal)
+        nums[index] = newVal
+        delete map.get(oldVal)
+        map.set(newVal, index)
+    })
+
+    return nums
+};
+
+// console.log(arrayChange([1,2], [[1,3],[2,1],[3,2]]))
+
+const replaceWords = function(dictionary, sentence) {
+    // let sentences = sentence.split(' ')
+    //
+    // for (let i in sentences) {
+    //     for(let d of dictionary){
+    //         if(d === sentences[i].slice(0, d.length)) {
+    //             sentences[i] = d
+    //         }
+    //     }
+    // }
+    //
+    // return sentences.join(' ')
+
+    const words = sentence.split(' ');
+
+    for (let i = 0; i < words.length; i++) {
+        for (let root of dictionary) {
+            if (words[i].startsWith(root)) {
+                words[i] = root;
+                break;
+            }
+        }
+    }
+
+    return words.join(' ');
+};
+
+// console.log(replaceWords(["cat","bat","rat"], "the cattle was rattled by the battery"))
+
+const replaceDigits = function(s) {
+    s = s.split('')
+
+    for (let i = 1; i < s.length; i += 2) {
+        let next = String.fromCharCode( +String(s[i-1]).charCodeAt() + +s[i])
+        s[i] = next
+    }
+
+    return s.join('')
+};
+
+// console.log(replaceDigits('a1c1e1'))
+
+const sortArrayByParity = function(nums) {
+    // for (let i = 0; i < nums.length; i++) {
+    //     for (let j = i + 1; j < nums.length; j++) {
+    //         if(nums[j] % 2 === 0) {
+    //             [nums[i], nums[j]] = [nums[j], nums[i]]
+    //             break
+    //         }
+    //     }
+    // }
+    //
+    // return nums
+
+    let left = 0
+    let right = nums.length - 1;
+
+    while(left < right){
+        if(nums[right] % 2 === 0 && nums[left] % 2 !== 0){
+            [nums[right], nums[left]] = [nums[left], nums[right]]
+        }
+        if(nums[left] % 2 === 0) left++   // if even
+        if(nums[right] % 2 !== 0) right--   // // if odd
+    }
+
+    return nums
+};
+
+// console.log(sortArrayByParity([3,1,2,4]))
+
+function findArraysMedium(arr1, arr2) {
+    let arr = []
+
+    let p1 = 0
+    let p2 = 0
+
+    while(p1<arr1.length && p2<arr2.length) {
+        if(arr1[p1]<arr2[p2]) {
+            arr.push(arr1[p1++])
+        } else {
+            arr.push(arr2[p2++])
+        }
+    }
+
+    while(p1 < arr1.length){
+        arr.push(arr1[p1++])
+    }
+
+    while(p2 < arr2.length){
+        arr.push(arr2[p2++])
+    }
+
+    let middle
+    if(arr.length % 2 === 0) {
+        middle = arr.length/2
+        return (arr[middle] + arr[middle - 1]) / 2
+    }
+
+    middle = Math.floor(arr.length/2)
+    return arr[middle]
+}
+
+// console.log(findArraysMedium([1,2], [3,4]))
+
+const heightChecker = function(heights) {
+    let expected = [...heights].sort((a,b)=>a-b)
+    let indices = 0
+
+    for(let i = 0; i < heights.length; i++){
+        if(heights[i] !== expected[i]) {
+            indices++
+        }
+    }
+
+    return indices
+};
+
+console.log(heightChecker([1,1,4,2,1,3]))
