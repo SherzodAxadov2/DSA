@@ -1086,4 +1086,92 @@ const heightChecker = function(heights) {
     return indices
 };
 
-console.log(heightChecker([1,1,4,2,1,3]))
+// console.log(heightChecker([1,1,4,2,1,3]))
+
+const maxNumberOfBalloons = function(text) {
+    let balloon = {
+        b: 0,
+        a: 0,
+        l: 0,
+        o: 0,
+        n: 0
+    }
+    for(let c of text){
+        if(balloon[c] || balloon[c] === 0) {
+            balloon[c]++
+        }
+    }
+
+    // first way with loop
+    // let count = Infinity
+    // for(let key in balloon){
+    //     if(key === 'l' || key === 'o'){
+    //         count = Math.min(count, Math.floor(balloon[key]/2))
+    //     } else {
+    //         count = Math.min(count, Math.floor(balloon[key]))
+    //     }
+    // }
+
+    // second way
+    let count = Math.min(
+        balloon['b'],
+        balloon['a'],
+        Math.floor(balloon['l']/2),
+        Math.floor(balloon['o']/2),
+        balloon['n']
+    )
+
+    return count
+};
+
+// console.log(maxNumberOfBalloons("loonbalxballpoon"))
+
+const findLonely = function(nums) {
+    let map = new Map();
+    nums.forEach(num=> map.set(num, (map.get(num) || 0) + 1))
+
+    let lonely = []
+    for(let [key, value] of map.entries()){
+        if(value === 1 && !map.get(key-1) && !map.get(key+1)) {
+            lonely.push(key)
+        }
+    }
+
+    return lonely
+};
+
+// console.log(findLonely([10,6,5,8]))
+
+const xorOperation = function(n, start) {
+    // let nums = Array(n)
+    // for(let i = 0; i < n; i++){
+    //     nums[i] = start + 2 * i
+    // }
+    //
+    // let bitwise = nums[0]
+    // for(let i = 1; i < n; i++){
+    //     bitwise ^= nums[i]
+    // }
+    //
+    // return bitwise
+
+    let result = 0
+    for(let i = 0; i < n; i++) {
+        result ^= start + 2 * i
+    }
+    return result
+};
+
+// console.log(xorOperation(4, 3))
+
+const swapPairs = function(head) {
+    if(!head || !head.next) return head
+
+    let first = head
+    let second = head.next
+
+    first.next = swapPairs(second.next)
+    second.next = first
+
+    return second
+};
