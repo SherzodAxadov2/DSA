@@ -1175,3 +1175,115 @@ const swapPairs = function(head) {
 
     return second
 };
+
+const subarraysDivByK = function(nums, k) {
+    let result = 0
+    let prefixSum = 0
+    let remainderCount = new Map()
+    remainderCount.set(0, 1)
+
+    for(let num of nums){
+        prefixSum += num
+        let remainder = ((prefixSum % k) + k) % k
+
+        if(remainderCount.has(remainder)){
+            result += remainderCount.get(remainder)
+            remainderCount.set(remainder, remainderCount.get(remainder) + 1)
+        } else {
+            remainderCount.set(remainder, 1)
+        }
+    }
+
+    return result
+};
+
+// console.log(subarraysDivByK([4,5,0,-2,-3,1], 5))
+
+function same(arr1, arr2) {
+    // naive approach
+    // if(arr1.length !== arr2.length) return false;
+    //
+    // for(let i in arr1){
+    //     let index = arr2.indexOf(arr1[i] ** 2)
+    //     if(index === -1) return false
+    //     arr2.splice(index, 1)
+    // }
+    //
+    // return true
+
+    // better approach
+    if(arr1.length !== arr2.length) return false;
+    let frequency1 = new Map()
+    let frequency2 = new Map()
+    arr1.forEach(el=>{
+        frequency1.set(el, (frequency1.get(el) || 0) + 1)
+    })
+
+    arr2.forEach(el=>{
+        frequency2.set(el, (frequency2.get(el) || 0) + 1)
+    })
+
+    for(let num of frequency1.keys()){
+        if(!frequency2.has(num ** 2)) return false
+        if(frequency2.get(num ** 2) !== frequency1.get(num)) return false
+    }
+
+    return true
+}
+
+// console.log(same([1,2,3,2], [4,4,1,9]))
+
+const findDifference = function(nums1, nums2) {
+    let set1 = new Set(nums1)
+    let set2 = new Set(nums2)
+
+    nums1 = [...set1].filter(el => !set2.has(el))
+    nums2 = [...set2].filter(el => !set1.has(el))
+
+    return [nums1, nums2]
+};
+
+// console.log(findDifference([1,2,3,3], [1,1,2,2]))
+
+const minSteps = function(s, t) {
+    // naive approach
+    // let sMap = new Map();
+    // let tMap = new Map();
+    //
+    // for(let el of s){
+    //     sMap.set(el, (sMap.get(el) || 0) + 1)
+    // }
+    //
+    // for(let el of t){
+    //     tMap.set(el, (tMap.get(el) || 0) + 1)
+    // }
+    //
+    // let result = 0
+    //
+    // for(let key of tMap.keys()){
+    //     if(!sMap.has(key)) result += tMap.get(key)
+    //     else {
+    //        let differ = tMap.get(key) - sMap.get(key)
+    //         if(differ>0) result += differ
+    //     }
+    // }
+    //
+    // return result
+
+    // better approach
+    const alphabets = Array(26).fill(0);
+    let result = 0;
+
+    for(let index=0; index<s.length; index++){
+        alphabets[s.charCodeAt(index) - 'a'.charCodeAt(0)] ++;
+        alphabets[t.charCodeAt(index) - 'a'.charCodeAt(0)] --;
+    }
+
+    for(let count of alphabets){
+        result += Math.max(0, count);
+    }
+
+    return result
+};
+
+console.log(minSteps('bab', 'aba'))
