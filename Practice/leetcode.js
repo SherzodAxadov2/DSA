@@ -1286,4 +1286,113 @@ const minSteps = function(s, t) {
     return result
 };
 
-console.log(minSteps('bab', 'aba'))
+// console.log(minSteps('bab', 'aba'))
+
+// Sliding window
+function maxSubArraySum(arr, num) {
+    // brute force
+    // if(!arr.length) return false
+    //
+    // let max = -Infinity
+    // for(let i = 0 ; i <= arr.length - num; i++){
+    //     let sum = 0
+    //     for(let j = i ; j < i + num; j++){
+    //         sum += arr[j]
+    //     }
+    //     max = Math.max(max, sum)
+    // }
+    //
+    // return max
+
+    // sliding window
+    if(arr.length < num) return null
+    let maxSum = 0
+    let tempSum = 0
+
+    for(let i = 0; i < num; i++){
+        maxSum += arr[i]
+    }
+
+    tempSum = maxSum
+    for(let i = num; i < arr.length; i++){
+        tempSum += arr[i] - arr[i - num]
+        console.log(tempSum)
+        maxSum = Math.max(maxSum, tempSum)
+    }
+
+    return maxSum
+}
+
+// console.log(maxSubArraySum([2,6,9,2,1,8,5,6,3], 3))
+
+const maxProfit = function(prices) {
+    let buy = 0
+    let sell = 1
+    let max = 0
+
+    while(sell < prices.length){
+        if(prices[buy] < prices[sell]){
+            let profit = prices[sell] - prices[buy];
+            max = Math.max(max, profit);
+        } else {
+            buy = sell;
+        }
+
+        sell++;
+    }
+
+    return max;
+};
+
+// console.log(maxProfit([7,6,4,3,1]))
+
+const containsNearbyDuplicate = function(nums, k) {
+    // brute force
+    // for(let i = 0; i < nums.length - 1; i++){
+    //     for(let j = i + 1; j < nums.length; j++){
+    //         if(nums[i] === nums[j] && Math.abs(i - j) <= k){
+    //             return true
+    //         }
+    //     }
+    // }
+    //
+    // return false
+
+    // hashmap
+    let indexMap = new Map()
+    for(let i = 0; i < nums.length; i++){
+        if(indexMap.has(nums[i])){
+            console.log(i, indexMap.get(nums[i]))
+            if(i - indexMap.get(nums[i]) <= k) return true
+        }
+
+        indexMap.set(nums[i], i)
+    }
+
+    return false
+};
+
+// console.log(containsNearbyDuplicate([1,0,1,1], 1))
+
+const relativeSortArray = function(arr1, arr2) {
+    let map = new Map()
+    arr2.forEach((el, index) => map.set(el, index))
+
+    arr1.sort((a,b)=> {
+        if (map.has(a) && map.get(b)) {
+            return map.get(a) - map.get(b);
+        } else if (map.has(a)) {
+            return -1;
+        } else if (map.has(b)) {
+            return 1;
+        } else {
+            return a - b;
+        }
+    })
+
+    return arr1
+};
+
+console.log(relativeSortArray([28,6,22,8,44,17], [22,28,8,6]))
+
+// [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
