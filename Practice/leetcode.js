@@ -1393,6 +1393,46 @@ const relativeSortArray = function(arr1, arr2) {
     return arr1
 };
 
-console.log(relativeSortArray([28,6,22,8,44,17], [22,28,8,6]))
+// console.log(relativeSortArray([28,6,22,8,44,17], [22,28,8,6]))
 
-// [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
+const isPalindrome = function(head) {
+    if (!head || !head.next) return true;
+    let prev = head
+    let slow = head
+    let fast = head
+
+    while(fast && fast.next){
+        prev = slow
+        slow = slow.next
+        fast = fast.next.next
+    }
+
+    if(fast){
+        slow = slow.next // if length of list is odd
+    }
+    prev.next = null
+
+    let head2 = reverseLinkedList(slow)
+
+    while(head && head2){
+        if(head.val !== head2.val) return false
+        head = head.next
+        head2 = head2.next
+    }
+
+    if(head || head2) return false
+
+    return true
+};
+
+function reverseLinkedList(head) {
+    let prev = null;
+    let current = head;
+    while (current !== null) {
+        let nextNode = current.next;
+        current.next = prev;
+        prev = current;
+        current = nextNode;
+    }
+    return prev;
+}
