@@ -1420,9 +1420,7 @@ const isPalindrome = function(head) {
         head2 = head2.next
     }
 
-    if(head || head2) return false
-
-    return true
+    return !(head || head2);
 };
 
 function reverseLinkedList(head) {
@@ -1436,3 +1434,18 @@ function reverseLinkedList(head) {
     }
     return prev;
 }
+
+const judgeSquareSum = function(c) {
+    let max = Math.floor(Math.sqrt(c));
+
+    for (let a = 0; a <= max; a++) {
+        let b = Math.sqrt(c - a * a);
+        if (b === Math.floor(b)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+console.log(judgeSquareSum(3))
