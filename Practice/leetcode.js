@@ -1448,4 +1448,19 @@ const judgeSquareSum = function(c) {
     return false;
 };
 
-console.log(judgeSquareSum(3))
+// console.log(judgeSquareSum(3))
+
+const increasingTriplet = function(nums) {
+    let first = Infinity
+    let second = Infinity
+
+    for(let num of nums){
+        if(num <= first) first = num
+        else if(num <= second) second = num
+        else return true
+    }
+
+    return false
+};
+
+console.log(increasingTriplet([2,1,5,0,4,6]))
