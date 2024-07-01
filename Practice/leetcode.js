@@ -1463,4 +1463,53 @@ const increasingTriplet = function(nums) {
     return false
 };
 
-console.log(increasingTriplet([2,1,5,0,4,6]))
+// console.log(increasingTriplet([2,1,5,0,4,6]))
+
+const compress = function(chars) {
+    let map = new Map()
+    for(let c of chars){
+        map.set(c, (map.get(c) || 0) + 1)
+    }
+
+    let arr = []
+
+    for([key, value] of map.entries()){
+        arr.push(key, String(value))
+    }
+
+    return arr
+};
+
+// console.log(compress(["a","a","b","b","c","c","c"]))
+
+const reverseStr = function (s, k) {
+    let result = ''
+
+    while (s.length >= 2 * k) {
+        let str = s.slice(0, 2 * k)
+
+        result = str.slice(0, k).split('').reverse().join('') + str.slice(k)
+
+        s = s.slice(2 * k)
+    }
+
+    if(s.length && s.length < k){
+        result = s.split('').reverse().join('')
+    } else if(s.length >= k){
+        result += s.slice(0,k).split('').reverse().join('') + s.slice(k)
+    }
+
+    return result
+};
+
+// console.log(reverseStr('abcdefg', 3))
+
+const countOdds = function (low, high) {
+    if (low % 2 === 0 && high % 2 === 0) {
+        return (high - low) / 2
+    } else if(low % 2 === 1 && high % 2 === 1){
+        return (high - low) / 2 + 1
+    } else {
+        return Math.floor((high - low) / 2) + 1
+    }
+};
