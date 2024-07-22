@@ -1,8 +1,11 @@
 function bubbleSort(array) {
+    let swapped = false
     for (let i = array.length - 1; i > 0; i--) {
+        swapped = false
         for (let j = 0; j < i; j++) {
             if (array[j] > array[j + 1]) {
                 [array[j], array[j + 1]] = [array[j + 1], array[j]] //swapping two elements
+                swapped = true
 
                 // or another way to swap elements
                 // let temp = array[j]
@@ -10,6 +13,7 @@ function bubbleSort(array) {
                 // array[j + 1] = temp
             }
         }
+        if(!swapped) break;
     }
 
     return array
